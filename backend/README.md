@@ -19,34 +19,13 @@ To get started with the backend development environment, follow these steps:
 3. Navigate to the `backend` directory:
 
 
-
-# Backend
-
-This is the backend component of the project, which serves as the server-side application handling HTTP requests and interacting with the database.
-
-## Technologies Used
-
-- Node.js
-- Express.js
-- MariaDB (MySQL)
-
-## Getting Started
-
-To get started with the backend development environment, follow these steps:
-
-1. Install Node.js and npm on your machine if they are not already installed.
-
-2. Clone this repository to your local machine.
-
-3. Navigate to the `backend` directory:
-
-
 4. Install the project dependencies:
 
 - Express.js
 - body-parser
 - cors
 - http
+- mariadb 
 
 
 5. Configure the MariaDB (MySQL) database connection in the `config.js` file. Update the `host`, `user`, `password`, and `database` fields with your database credentials.
