@@ -1,36 +1,22 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-// import { API_KEY, API_HOST } from "../../config";
 import { Typography, Link, Box } from "@mui/material";
+import { fetchRestaurantDetails } from "../../services/api";
 
 const RestaurantDetailsComponent = ({ restaurant }) => {
-  const [restaurantData, setRestaurantData] = useState();
+  const [restaurantData, setRestaurantData] = useState(null);
 
   useEffect(() => {
-    const fetchRestaurantDetails = async () => {
+    const fetchData = async () => {
       try {
-        const options = {
-          method: "GET",
-          url: "https://tripadvisor16.p.rapidapi.com/api/v1/restaurant/getRestaurantDetails",
-          params: {
-            restaurantsId: restaurant.restaurantsId,
-            currencyCode: "USD",
-          },
-          headers: {
-            // "X-RapidAPI-Key": API_KEY,
-            // "X-RapidAPI-Host": API_HOST,
-          },
-        };
-
-        const response = await axios.request(options);
-        console.log(response.data.data);
-        setRestaurantData(response.data.data);
+        const data = await fetchRestaurantDetails(restaurant.restaurantsId);
+        console.log(data);
+        setRestaurantData(data);
       } catch (error) {
         console.error("Error fetching restaurant data:", error);
       }
     };
 
-    fetchRestaurantDetails();
+    fetchData();
   }, [restaurant.restaurantsId]);
 
   return (
