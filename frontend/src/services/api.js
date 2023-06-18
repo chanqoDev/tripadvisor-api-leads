@@ -6,8 +6,8 @@ export const fetchRestaurantData = async (locationId) => {
     method: "GET",
     url: "https://tripadvisor16.p.rapidapi.com/api/v1/restaurant/searchRestaurants",
     headers: {
-      // "X-RapidAPI-Key": YOUR_API_KEY,
-      // "X-RapidAPI-Host": YOUR_API_HOST,
+      // "X-RapidAPI-Key": API_KEY,
+      // "X-RapidAPI-Host": API_HOST,
     },
     params: {
       locationId: locationId,

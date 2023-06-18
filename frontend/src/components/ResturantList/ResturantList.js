@@ -13,6 +13,7 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { fetchRestaurantData } from "../../services/api";
+import RestaurantDetailsComponent from "../RestaurantDetails/RestaurantDetails";
 
 function SearchRestaurant() {
   const [restaurants, setRestaurantData] = useState([]);
@@ -72,19 +73,24 @@ function SearchRestaurant() {
                   <TableCell align="center" style={{ fontWeight: "bold" }}>
                     RestaurantsId
                   </TableCell>
+                  <TableCell align="center" style={{ fontWeight: "bold" }}>
+                    Location ID
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {restaurants.map((data) => (
-                  <React.Fragment key={data.restaurantsId}>
+                {restaurants.map((restaurant) => (
+                  <React.Fragment key={restaurant.restaurantsId}>
                     <TableRow>
                       <TableCell>
                         <IconButton
                           aria-label="expand row"
                           size="small"
-                          onClick={() => handleRowToggle(data.restaurantsId)}
+                          onClick={() =>
+                            handleRowToggle(restaurant.restaurantsId)
+                          }
                         >
-                          {openRows.includes(data.restaurantsId) ? (
+                          {openRows.includes(restaurant.restaurantsId) ? (
                             <KeyboardArrowUpIcon />
                           ) : (
                             <KeyboardArrowDownIcon />
@@ -92,13 +98,20 @@ function SearchRestaurant() {
                         </IconButton>
                       </TableCell>
                       <TableCell align="center" component="th" scope="row">
-                        {data.name}
+                        {restaurant.name}
                       </TableCell>
                       <TableCell align="right">
-                        {data.currentOpenStatusText}
+                        {restaurant.currentOpenStatusText}
                       </TableCell>
-                      <TableCell align="right">{data.parentGeoName}</TableCell>
-                      <TableCell align="center">{data.restaurantsId}</TableCell>
+                      <TableCell align="right">
+                        {restaurant.parentGeoName}
+                      </TableCell>
+                      <TableCell align="center">
+                        {restaurant.restaurantsId}
+                      </TableCell>
+                      <TableCell align="center">
+                        {restaurant.locationId}
+                      </TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell
@@ -106,7 +119,7 @@ function SearchRestaurant() {
                         colSpan={6}
                       >
                         <Collapse
-                          in={openRows.includes(data.restaurantsId)}
+                          in={openRows.includes(restaurant.restaurantsId)}
                           timeout="auto"
                           unmountOnExit
                         >
@@ -118,9 +131,13 @@ function SearchRestaurant() {
                             >
                               Additional Information
                             </Typography>
+                            <RestaurantDetailsComponent
+                              key={restaurant.restaurantsId}
+                              restaurant={restaurant}
+                            />
                             <img
-                              src={data.heroImgUrl}
-                              alt={data.name}
+                              src={restaurant.heroImgUrl}
+                              alt={restaurant.name}
                               height="auto"
                               width="250"
                             />
