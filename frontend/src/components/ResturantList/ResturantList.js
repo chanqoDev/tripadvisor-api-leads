@@ -39,19 +39,6 @@ function SearchRestaurant() {
       } catch (error) {
         console.error(error);
       }
-      // try {
-      //   const allData = await Promise.all(
-      //     locationIds.map(async (locationId) => {
-      //       const data = await fetchRestaurantData(locationId);
-      //       return data;
-      //     })
-      //   );
-      //   const mergedData = allData.flat();
-      //   setRestaurantData(mergedData);
-      //   console.log(mergedData);
-      // } catch (error) {
-      //   console.error(error);
-      // }
     };
     fetchData();
   }, []);
