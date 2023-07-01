@@ -8,6 +8,8 @@ app.use(cors());
 app.use(express.json());
 const config = require("./config");
 const PORT = 3001;
+const bodyParser = require("body-parser");
+app.use(bodyParser.json());
 
 app.get("/test", (req, res) => {
   res.send("new update ");
@@ -32,13 +34,36 @@ db.connect((err) => {
   console.log("Mysql Connected..");
 });
 
-// Create table
-// app.get("/createpoststable", (req, res) => {
-//   let sql =
-//     "CREATE TABLE posts(id int AUTO_INCREMENT, title VARCHAR(255), body VARCHAR(255), PRIMARY KEY (id))";
-//   db.query(sql, (err, result) => {
-//     if (err) throw err;
-//     console.log(result);
-//     res.send("Post Table created...");
-//   });
-// });
+app.post("/restaurants", (req, res) => {
+  const restaurantData = req.body;
+
+  // Assuming the structure of restaurantData matches the TripAdvisor API response
+  // Extract the necessary data from restaurantData
+  const {
+    restaurantsId,
+    name,
+    currentOpenStatusText,
+    parentGeoName,
+    locationId,
+  } = restaurantData;
+
+  // Create the SQL query to insert the data into the database
+  const sql = `INSERT INTO restaurants (restaurantsId, name, currentOpenStatusText, parentGeoName, locationId) VALUES (?, ?, ?, ?, ?)`;
+
+  // Execute the SQL query with the extracted data
+  db.query(
+    sql,
+    [restaurantsId, name, currentOpenStatusText, parentGeoName, locationId],
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error saving data to the database");
+        console.log(result);
+      } else {
+        console.log("Data saved to the database");
+        res.status(200).send("Data saved to the database");
+        console.log(result);
+      }
+    }
+  );
+});
