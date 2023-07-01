@@ -14,6 +14,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { fetchRestaurantData } from "../../services/api";
 import RestaurantDetailsComponent from "../RestaurantDetails/RestaurantDetails";
+import axios from "axios";
 
 function SearchRestaurant() {
   const [restaurants, setRestaurantData] = useState([]);
@@ -30,12 +31,39 @@ function SearchRestaurant() {
         const mergedData = allData.flat();
         setRestaurantData(mergedData);
         console.log(mergedData);
+
+        // Save restaurant data to the database
+        mergedData.forEach((restaurant) => {
+          saveRestaurantData(restaurant);
+        });
       } catch (error) {
         console.error(error);
       }
+      // try {
+      //   const allData = await Promise.all(
+      //     locationIds.map(async (locationId) => {
+      //       const data = await fetchRestaurantData(locationId);
+      //       return data;
+      //     })
+      //   );
+      //   const mergedData = allData.flat();
+      //   setRestaurantData(mergedData);
+      //   console.log(mergedData);
+      // } catch (error) {
+      //   console.error(error);
+      // }
     };
     fetchData();
   }, []);
+
+  const saveRestaurantData = async (restaurant) => {
+    try {
+      await axios.post("http://localhost:3001/restaurants", restaurant);
+      console.log("Restaurant data saved to the database");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const [openRows, setOpenRows] = useState([]);
   const handleRowToggle = (restaurantsId) => {
