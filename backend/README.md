@@ -38,6 +38,33 @@ This will start the backend server on the specified port (default is 3001).
 7. The backend server is now ready to handle HTTP requests.
 
 ## API Endpoints
+## Description
+
+This project is an API that provides various endpoints for managing restaurant data. It allows users to perform operations such as adding new restaurants, retrieving restaurant information, and updating existing restaurant data.
+
+## API Endpoints
+
+The API exposes the following endpoints:
+
+- `GET /restaurants`: Retrieves a list of all restaurants.
+- `GET /restaurants/:id`: Retrieves a specific restaurant by ID.
+- `POST /restaurants`: Adds a new restaurant to the database.
+- `PUT /restaurants/:id`: Updates an existing restaurant by ID.
+- `DELETE /restaurants/:id`: Deletes a restaurant by ID.
+
+## Testing with Postman
+
+To test the API endpoints, you can use a tool like Postman. Here's how to get started:
+
+1. Download and install Postman from the official website (https://www.postman.com/downloads/).
+2. Launch Postman and create a new request.
+3. Set the request URL to the desired endpoint (e.g., `http://localhost:3000/restaurants`).
+4. Choose the appropriate HTTP method (GET, POST, PUT, DELETE) for the desired operation.
+5. Set any required request headers or parameters as specified in the API documentation.
+6. Click the "Send" button to make the request and view the response.
+
+Make sure to test the API endpoints using Postman to ensure proper functionality and verify the expected results.
+
 
 The following API endpoints are available:
 
