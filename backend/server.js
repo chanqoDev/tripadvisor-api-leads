@@ -34,10 +34,33 @@ db.connect((err) => {
   console.log("Mysql Connected..");
 });
 
+// Create restaurants table if it doesn't exist
+const createTableQuery = `
+CREATE TABLE IF NOT EXISTS restaurants (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  restaurantsId VARCHAR(255) UNIQUE,  -- Add UNIQUE constraint
+  name VARCHAR(255),
+  currentOpenStatusText VARCHAR(255),
+  parentGeoName VARCHAR(255),
+  locationId INT,
+  phone VARCHAR(255),
+  location VARCHAR(255),
+  geo INT,
+  geoid VARCHAR(255),
+  contactAddress VARCHAR(255)
+)`;
+
+db.query(createTableQuery, (err, result) => {
+  if (err) {
+    console.error(err);
+  } else {
+    console.log("Table created");
+  }
+});
+
 app.post("/restaurants", (req, res) => {
   const restaurantData = req.body;
 
-  // Assuming the structure of restaurantData matches the TripAdvisor API response
   // Extract the necessary data from restaurantData
   const {
     restaurantsId,
@@ -45,24 +68,40 @@ app.post("/restaurants", (req, res) => {
     currentOpenStatusText,
     parentGeoName,
     locationId,
+    phone,
+    location,
+    geo,
+    geoid,
+    contactAddress,
   } = restaurantData;
 
   // Create the SQL query to insert the data into the database
-  const sql = `INSERT INTO restaurants (restaurantsId, name, currentOpenStatusText, parentGeoName, locationId) VALUES (?, ?, ?, ?, ?)`;
+  const insertQuery = `
+    INSERT INTO restaurants (restaurantsId, name, currentOpenStatusText, parentGeoName, locationId, phone, location, geo, geoid, contactAddress)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
   // Execute the SQL query with the extracted data
   db.query(
-    sql,
-    [restaurantsId, name, currentOpenStatusText, parentGeoName, locationId],
+    insertQuery,
+    [
+      restaurantsId,
+      name,
+      currentOpenStatusText,
+      parentGeoName,
+      locationId,
+      phone,
+      location,
+      geo,
+      geoid,
+      contactAddress,
+    ],
     (err, result) => {
       if (err) {
         console.error(err);
         res.status(500).send("Error saving data to the database");
-        console.log(result);
       } else {
         console.log("Data saved to the database");
         res.status(200).send("Data saved to the database");
-        console.log(result);
       }
     }
   );
